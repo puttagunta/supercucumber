@@ -1,0 +1,18 @@
+package generatedJava;
+
+import org.junit.runner.RunWith;
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(format = {
+"pretty",
+"json:build/reports/cucumber/json/report-${className}.json",
+"junit:build/reports/cucumber/junit/report-${className}.xml",
+"html:build/reports/cucumber/html"
+},
+features = "${featurePath}",
+glue = "${stepdefs}"
+)
+public class Cucumber_${className} {
+}
