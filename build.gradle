@@ -5,6 +5,9 @@ apply plugin: 'groovy'
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'checkstyle'
+apply plugin: 'signing'
+
+import org.gradle.api.tasks.Upload
 
 sourceCompatibility = 1.8
 
@@ -59,14 +62,54 @@ checkstyle {
 	toolVersion = "7.0"
 }
 
-uploadArchives {
+task uploadToLocalNexus(type: Upload) {
+	configuration = project.configurations.archives
 	repositories {
 		mavenDeployer {
-			repository(url: "${nexusUrl}/repository/maven-releases/") {
-				authentication(userName: nexusUsername, password: nexusPassword)
+			repository(url: "${localNexusUrl}") {
+				authentication(userName: localNexusUsername, password: localNexusPassword)
 			}
-			snapshotRepository(url: "${nexusUrl}/repository/maven-snapshots") {
-				authentication(userName: nexusUsername, password: nexusPassword)
+			snapshotRepository(url: "${localNexusSnapshotUrl}") {
+				authentication(userName: localNexusUsername, password: localNexusPassword)
+			}
+		}
+	}
+}
+
+task uploadToSonatypeNexus(type: Upload) {
+	configuration = project.configurations.archives
+	repositories {
+		mavenDeployer {
+			repository(url: "${sonatypeNexusUrl}") {
+				authentication(userName: sonatypeNexusUsername, password: sonatypeNexusPassword)
+			}
+			snapshotRepository(url: "${sonatypeNexusSnapshotUrl}") {
+				authentication(userName: sonatypeNexusUsername, password: sonatypeNexusPassword)
+			}
+		}
+
+		pom {
+			project {
+				name 'supercucumber'
+				packaging 'jar'
+				// optionally artifactId can be defined here
+				description 'Sreedhars share to the OS community'
+				url 'http://www.cucumbergoodies.com'
+
+				licenses {
+					license {
+						name 'The Apache License, Version 2.0'
+						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					}
+				}
+
+				developers {
+					developer {
+						id 'puttagunta'
+						name 'Sreedhar Puttagunta'
+						email 'sreedhar.puttagunta.us@gmail.com'
+					}
+				}
 			}
 		}
 	}

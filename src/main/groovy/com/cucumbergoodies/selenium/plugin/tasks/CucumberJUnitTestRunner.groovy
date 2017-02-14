@@ -10,29 +10,25 @@ import cucumber.runtime.model.CucumberScenario
 import cucumber.runtime.model.CucumberScenarioOutline
 import gherkin.TagExpression
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 
 class CucumberJUnitTestRunner extends DefaultTask {
-	@Input  parallelize
-	@Input int maxParallelForks
-
 	@TaskAction
 	def start() {
-		generateTestRunners()
+		generateCucumberRunners()
 	}
 
-	def generateTestRunners() {
+	def generateCucumberRunners() {
 		switch (getParallelize()) {
 			case PARALLELIZE_OPTIONS.FEATURES:
 				getFeaturePathsFilteredByTags().each { featurePath ->
-					generateTestRunner(featurePath)
+					generateARunner(featurePath)
 				}
 				break
 			case PARALLELIZE_OPTIONS.SCENARIOS:
 				generateFeatureFilesPerScenario()
 				new File("$project.buildDir/generated-src/features/").listFiles().each { feature ->
-					generateTestRunner(feature.getPath())
+					generateARunner(feature.getPath())
 				}
 				break
 			default:
@@ -93,7 +89,8 @@ class CucumberJUnitTestRunner extends DefaultTask {
 	}
 
 	def static getBackground(featurePath) {
-		def lines = new File(featurePath).readLines()
+		def featureFile = new File(featurePath)
+		def lines = featureFile.readLines()
 		def background = ''
 		for (int i = 0; i < lines.size(); i++) {
 			String line = lines.get(i).trim();
@@ -164,7 +161,7 @@ class CucumberJUnitTestRunner extends DefaultTask {
 		}
 	}
 
-	def generateTestRunner(String featurePath) {
+	def generateARunner(String featurePath) {
 		def tags = getTags()
 		def browser = getBrowser()
 		def templateFile = (tags == null) ? 'CucumberJUnitTestNoTag.java.template' :
@@ -187,6 +184,16 @@ class CucumberJUnitTestRunner extends DefaultTask {
 				"Cucumber_${newFileName}.java"
 			}
 		}
+	}
+
+	def getParallelize() {
+		project.extensions.findByName(CucumberExtensionsPlugin.CUCUMBER_EXTENSION_NAME)
+				.parallelize
+	}
+
+	def getMaxParallelForks() {
+		project.extensions.findByName(CucumberExtensionsPlugin.CUCUMBER_EXTENSION_NAME)
+				.maxParallelForks
 	}
 
 	def getBrowser() {
