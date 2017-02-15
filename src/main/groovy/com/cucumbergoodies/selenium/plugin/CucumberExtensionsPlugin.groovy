@@ -18,6 +18,11 @@ class CucumberExtensionsPlugin implements Plugin<Project> {
 		addTasks(project)
 		SourceSetContainer sourceSets =
 				(SourceSetContainer) project.getProperties().get("sourceSets");
+		project.configurations {
+			cucumberRuntime {
+				extendsFrom testRuntime
+			}
+		}
 		sourceSets.getByName("test").getJava()
 				.srcDirs(["src/test/java", "$project.buildDir/generated-src/java"]);
 	}

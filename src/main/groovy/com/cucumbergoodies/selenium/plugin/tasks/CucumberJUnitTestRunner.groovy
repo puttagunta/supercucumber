@@ -2,7 +2,6 @@ package com.cucumbergoodies.selenium.plugin.tasks
 
 import com.cucumbergoodies.selenium.plugin.CucumberExtensionsPlugin
 import gherkin.formatter.model.Tag
-
 import static com.cucumbergoodies.selenium.plugin.ParallelizeOptions.PARALLELIZE_OPTIONS
 import cucumber.runtime.io.MultiLoader
 import cucumber.runtime.model.CucumberFeature
