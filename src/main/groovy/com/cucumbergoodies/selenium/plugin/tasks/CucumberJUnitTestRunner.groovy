@@ -191,11 +191,6 @@ class CucumberJUnitTestRunner extends DefaultTask {
 				.parallelize
 	}
 
-	def getMaxParallelForks() {
-		project.extensions.findByName(CucumberExtensionsPlugin.CUCUMBER_EXTENSION_NAME)
-				.maxParallelForks
-	}
-
 	def getBrowser() {
 		project.extensions.findByName(CucumberExtensionsPlugin.CUCUMBER_EXTENSION_NAME)
 				.browser
@@ -208,7 +203,7 @@ class CucumberJUnitTestRunner extends DefaultTask {
 
 	def getTags() {
 		project.extensions.findByName(CucumberExtensionsPlugin.CUCUMBER_EXTENSION_NAME)
-				.cucumberTaskTags
+				.tags
 	}
 
 	def getFeatures() {

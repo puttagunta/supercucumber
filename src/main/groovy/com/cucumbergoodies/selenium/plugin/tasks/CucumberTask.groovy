@@ -9,7 +9,7 @@ import org.gradle.api.tasks.TaskAction
 class CucumberTask extends DefaultTask {
 	@Input def stepDefinitionsPath
 	@Input def featuresPath
-	@Input def cucumberTaskTags
+	@Input def tags
 	@Input def dryRunFlag
 
 	CucumberTask() {}
@@ -27,7 +27,7 @@ class CucumberTask extends DefaultTask {
 						'-f', 'pretty',
 						'--glue', getStepDefinitionsPath(),
 						getFeaturesPath(),
-						'--tags', getCucumberTaskTags(),
+						'--tags', getTags(),
 						getDryRunFlag()
 			})
 		}

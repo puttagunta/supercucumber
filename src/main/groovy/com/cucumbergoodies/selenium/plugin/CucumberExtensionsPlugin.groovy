@@ -1,6 +1,7 @@
 package com.cucumbergoodies.selenium.plugin
 
 import com.cucumbergoodies.selenium.plugin.tasks.CucumberJUnitTestRunner
+import org.gradle.api.tasks.SourceSetContainer
 
 import static com.cucumbergoodies.selenium.plugin.ParallelizeOptions.PARALLELIZE_OPTIONS
 import com.cucumbergoodies.selenium.plugin.tasks.CucumberTask
@@ -15,18 +16,21 @@ class CucumberExtensionsPlugin implements Plugin<Project> {
 		println('cucumber goodies')
 		project.extensions.create(CUCUMBER_EXTENSION_NAME, CucumberExtensionsPluginExtension)
 		addTasks(project)
+		SourceSetContainer sourceSets =
+				(SourceSetContainer) project.getProperties().get("sourceSets");
+		sourceSets.getByName("test").getJava()
+				.srcDirs(["src/test/java", "$project.buildDir/generated-src/java"]);
 	}
 
 	def addTasks(Project project) {
 		project.task('cucumberTask', type: CucumberTask) {
 			conventionMapping.stepDefinitionsPath = { getStepDefinitionsPath(project) }
 			conventionMapping.featuresPath = { getFeaturesPath(project) }
-			conventionMapping.cucumberTaskTags = { getCucumberTaskTags(project) }
+			conventionMapping.tags = { getTags(project) }
 			conventionMapping.dryRunFlag = { getDryRunFlag(project) }
 		}
 		project.task('junitTestRunner', type: CucumberJUnitTestRunner) {
 			conventionMapping.parallelize = { getParallelize(project) }
-			conventionMapping.maxParallelForks = { getMaxParallelForks(project) }
 		}
 	}
 
@@ -40,9 +44,9 @@ class CucumberExtensionsPlugin implements Plugin<Project> {
 				project.extensions.findByName(CUCUMBER_EXTENSION_NAME).featuresPath
 	}
 
-	private String getCucumberTaskTags(Project project) {
-		project.hasProperty('cucumberTaskTags') ? project.cucumberTaskTags:
-				project.extensions.findByName(CUCUMBER_EXTENSION_NAME).cucumberTaskTags
+	private String getTags(Project project) {
+		project.hasProperty('tags') ? project.tags:
+				project.extensions.findByName(CUCUMBER_EXTENSION_NAME).tags
 	}
 
 	private String getDryRunFlag(Project project) {
@@ -53,10 +57,5 @@ class CucumberExtensionsPlugin implements Plugin<Project> {
 	private PARALLELIZE_OPTIONS getParallelize(Project project) {
 		project.hasProperty('parallelize') ? project.parallelize
 				: project.extensions.findByName(CUCUMBER_EXTENSION_NAME).parallelize
-	}
-
-	private int getMaxParallelForks(Project project) {
-		project.hasProperty('maxParallelForks') ? project.maxParallelForks
-				: project.extensions.findByName(CUCUMBER_EXTENSION_NAME).maxParallelForks
 	}
 }
