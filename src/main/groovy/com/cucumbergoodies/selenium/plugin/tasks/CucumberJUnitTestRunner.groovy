@@ -2,6 +2,7 @@ package com.cucumbergoodies.selenium.plugin.tasks
 
 import com.cucumbergoodies.selenium.plugin.CucumberExtensionsPlugin
 import gherkin.formatter.model.Tag
+
 import static com.cucumbergoodies.selenium.plugin.ParallelizeOptions.PARALLELIZE_OPTIONS
 import cucumber.runtime.io.MultiLoader
 import cucumber.runtime.model.CucumberFeature
@@ -26,7 +27,7 @@ class CucumberJUnitTestRunner extends DefaultTask {
 				break
 			case PARALLELIZE_OPTIONS.SCENARIOS:
 				generateFeatureFilesPerScenario()
-				new File("$project.buildDir/generated-src/features/").listFiles().each { feature ->
+				new File("$project.buildDir/src/features/").listFiles().each { feature ->
 					generateARunner(feature.getPath())
 				}
 				break
@@ -114,7 +115,7 @@ class CucumberJUnitTestRunner extends DefaultTask {
 		MultiLoader loader = new MultiLoader(classLoader);
 		def filters = []
 		def featurePaths = features.collect { it.absolutePath }
-		new File("$project.buildDir/generated-src/features/").mkdirs()
+		new File("$project.buildDir/src/features/").mkdirs()
 		if (tags != null) {
 			TagExpression tagExpression = new TagExpression(Arrays.asList(tags.split(' ')));
 			for (CucumberFeature feature : CucumberFeature.load(loader, featurePaths, filters)) {
@@ -151,7 +152,7 @@ class CucumberJUnitTestRunner extends DefaultTask {
 						String featureFileName = feature.getPath().replace('\\', '/').split('/').
 								last().split('\\.').first()
 						featureFileName = sprintf('%s_%d.feature', featureFileName, fileIndex++)
-						File featureFile = new File("$project.buildDir/generated-src/features/" +
+						File featureFile = new File("$project.buildDir/src/features/" +
 								featureFileName)
 						featureFile.write(scenarioText);
 					}
@@ -172,7 +173,7 @@ class CucumberJUnitTestRunner extends DefaultTask {
 				it.name.contains('cucumber-extensions')
 			}
 			from project.resources.text.fromArchiveEntry(jarFile, 'templates/' + templateFile).asFile()
-			into "$project.buildDir/generated-src/java"
+			into "$project.buildDir/src/java"
 			def newFileName = featureFileName.replace('.', '_') + '_' + browser.replace('.', '_')
 			expand(featurePath: marphedFeaturePath,
 					fileName: featureFileName,

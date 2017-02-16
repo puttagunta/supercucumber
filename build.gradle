@@ -7,8 +7,6 @@ apply plugin: 'maven'
 apply plugin: 'checkstyle'
 apply plugin: 'signing'
 
-import org.gradle.api.tasks.Upload
-
 sourceCompatibility = 1.8
 
 repositories {
@@ -39,7 +37,7 @@ configurations {
 sourceSets {
 	test {
 		java {
-			srcDirs = ["src/test/java", "$buildDir/generated-src/java"]
+			srcDirs = ["src/test/java", "$buildDir/src/java"]
 		}
 	}
 }
@@ -54,6 +52,7 @@ dependencies {
 	compile group: 'info.cukes', name: 'cucumber-java', version: '1.2.4'
 	compile 'info.cukes:cucumber-junit:1.2.2'
 	compile 'info.cukes:cucumber-testng:1.+'
+	compile 'com.googlecode.json-simple:json-simple:1.+'
 	testCompile group: 'info.cukes', name: 'cucumber-java', version: '1.2.4'
 	testCompile group: 'info.cukes', name: 'cucumber-junit', version: '1.2.2'
 	testCompile group: 'org.spockframework', name: 'spock-core', version: '1.0-groovy-2.4'

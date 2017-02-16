@@ -1,6 +1,7 @@
 package com.cucumbergoodies.selenium.plugin
 
 import com.cucumbergoodies.selenium.plugin.tasks.CucumberJUnitTestRunner
+import com.cucumbergoodies.selenium.plugin.tasks.MergeReports
 import org.gradle.api.tasks.SourceSetContainer
 
 import static com.cucumbergoodies.selenium.plugin.ParallelizeOptions.PARALLELIZE_OPTIONS
@@ -24,7 +25,7 @@ class CucumberExtensionsPlugin implements Plugin<Project> {
 			}
 		}
 		sourceSets.getByName("test").getJava()
-				.srcDirs(["src/test/java", "$project.buildDir/generated-src/java"]);
+				.srcDirs(["src/test/java", "$project.buildDir/src/java"]);
 	}
 
 	def addTasks(Project project) {
@@ -37,6 +38,7 @@ class CucumberExtensionsPlugin implements Plugin<Project> {
 		project.task('junitTestRunner', type: CucumberJUnitTestRunner) {
 			conventionMapping.parallelize = { getParallelize(project) }
 		}
+		project.task('mergeReports', type: MergeReports)
 	}
 
 	private String getStepDefinitionsPath(Project project) {
