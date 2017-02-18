@@ -1,4 +1,9 @@
 <meta name='keywords' content='cucumber-extensions, cucumber scenario parallelization, cucumber feature parallelization, cucumber parallel scenario runner, cucumber parallel feature runner, speedup cucumber execution, supercucumber'>
+<!--
+  Title: Parallelizing cucumber scenario execution
+  Description: A Gradle plugin to help executing cucumber scenarios or features in parallel.
+  Author: Sreedhar Puttagunta
+-->
 
 # Parallelization
 > This can be done in two ways with the help of the plugin code of this repo. One of the ways is to
