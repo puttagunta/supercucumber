@@ -31,12 +31,10 @@ import com.cucumbergoodies.selenium.plugin.tasks.CucumberJUnitTestRunner
 
 buildscript {
     repositories {
-        maven {
-            url 'https://oss.sonatype.org/content/repositories/snapshots'
-        }
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.cucumbergoodies.seleium:cucumber-extensions:1.0-SNAPSHOT'
+        classpath 'com.cucumbergoodies.seleium:cucumber-extensions:1.0'
     }
 }
 
