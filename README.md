@@ -1,3 +1,5 @@
+<meta name='keywords' content='cucumber-extensions, cucumber scenario parallelization, cucumber feature parallelization, cucumber parallel scenario runner, cucumber parallel feature runner, speedup cucumber execution, supercucumber'>
+
 # Parallelization
 > This can be done in two ways with the help of the plugin code of this repo. One of the ways is to
 parallelizing features and other being parallelizing scenarios. The task, which can be used for this
