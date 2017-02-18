@@ -1,4 +1,4 @@
-<meta name='keywords' content='cucumber-extensions, cucumber scenario parallelization, cucumber feature parallelization, cucumber parallel scenario runner, cucumber parallel feature runner, speedup cucumber execution, supercucumber'>
+<meta name='keywords' content='cucumber-extensions, cucumber scenario parallelization, cucumber feature parallelization, cucumber parallel scenario runner, cucumber parallel feature runner, speedup cucumber execution, supercucumber, running cucumber scenarios in parallel, running cucumber features in parallel'>
 <!--
   Title: Parallelizing cucumber scenario execution
   Description: A Gradle plugin to help executing cucumber scenarios or features in parallel.
