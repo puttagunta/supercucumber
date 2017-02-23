@@ -26,7 +26,9 @@ buildscript {
 
 group 'com.cucumbergoodies.seleium'
 def majorVersion = '1.0'
-if ('release'.equals("${repotype}")) {
+def repotype ="${repotype}"
+if ('releases' == repotype) {
+	println "${repotype}"
 	version majorVersion
 } else {
 	version majorVersion + '-SNAPSHOT'

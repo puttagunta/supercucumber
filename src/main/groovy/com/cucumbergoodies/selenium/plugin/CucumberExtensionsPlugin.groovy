@@ -35,9 +35,6 @@ class CucumberExtensionsPlugin implements Plugin<Project> {
 			conventionMapping.tags = { getTags(project) }
 			conventionMapping.dryRunFlag = { getDryRunFlag(project) }
 		}
-		project.task('junitTestRunner', type: CucumberJUnitTestRunner) {
-			conventionMapping.parallelize = { getParallelize(project) }
-		}
 		project.task('mergeReports', type: MergeReports)
 	}
 
